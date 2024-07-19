@@ -22,7 +22,7 @@ private:
 	virtual void Update() override;
 
 
-	
+	time_t MakeTime(int year, int month, int day);
 
 private:
 	wxMenu* menuFile;
@@ -32,5 +32,6 @@ private:
 	wxGrid* grid;
 
 	wxTimer* timer;
+
 
 };

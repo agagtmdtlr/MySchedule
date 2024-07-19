@@ -61,15 +61,15 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
 
 	time_t rawTime;
 	rawTime = time(nullptr);
-	tm* pTimeInfo;
-	pTimeInfo = localtime(&rawTime);
+	tm* localTimeInfo;
+	localTimeInfo = localtime(&rawTime);
 
-	int year = pTimeInfo->tm_year +1900;
-	int month = pTimeInfo->tm_mon + 1;
-	int day = pTimeInfo->tm_mday;
-	int hour = pTimeInfo->tm_hour;
-	int min = pTimeInfo->tm_min;
-	int sec = pTimeInfo->tm_sec;
+	int year = localTimeInfo->tm_year +1900;
+	int month = localTimeInfo->tm_mon + 1;
+	int day = localTimeInfo->tm_mday;
+	int hour = localTimeInfo->tm_hour;
+	int min = localTimeInfo->tm_min;
+	int sec = localTimeInfo->tm_sec;
 
 	wxString currentTime = wxString::Format("%d년 %d월 %d일 %d시 %d분 %d초\n", year, month, day, hour, min, sec);
 
@@ -87,21 +87,41 @@ void MyFrame::OnTimer(wxTimerEvent& event)
 {
 	time_t rawTime;
 	rawTime = time(nullptr);
-	tm* pTimeInfo;
-	pTimeInfo = localtime(&rawTime);
+	tm* localTimeInfo;
+	localTimeInfo = localtime(&rawTime);
 
-	int year = pTimeInfo->tm_year + 1900;
-	int month = pTimeInfo->tm_mon + 1;
-	int day = pTimeInfo->tm_mday;
-	int hour = pTimeInfo->tm_hour;
-	int min = pTimeInfo->tm_min;
-	int sec = pTimeInfo->tm_sec;
+	int year = localTimeInfo->tm_year + 1900;
+	int month = localTimeInfo->tm_mon + 1;
+	int day = localTimeInfo->tm_mday;
+	int hour = localTimeInfo->tm_hour;
+	int min = localTimeInfo->tm_min;
+	int sec = localTimeInfo->tm_sec;
 
-	wxString currentTime = wxString::Format("%d년 %d월 %d일 %d시 %d분 %d초\n", year, month, day, hour, min, sec);
+
+
+	wxString currentTime(asctime(localTimeInfo));
+
+	//wxString currentTime = wxString::Format("%d년 %d월 %d일 %d시 %d분 %d초\n", year, month, day, hour, min, sec);
 
 	grid->SetCellValue(0, 0, currentTime);
 
+
+	time_t testTime = MakeTime(2024,7,1);
+	tm* testLocal;
+	testLocal = localtime(&testTime);
+
+	wxString testString = asctime(testLocal);
+	grid->SetCellValue(0, 1, testString);
+	time_t testTime2 = MakeTime(2024,7,0);
+	testLocal = localtime(&testTime2);
+
+	testString  = asctime(testLocal);
+	grid->SetCellValue(0, 2, testString);
+
 	grid->UpdateGridWindows();
+
+
+	
 }
 
 
@@ -130,5 +150,22 @@ void MyFrame::Update()
 	
 
 
+}
+
+time_t MyFrame::MakeTime(int year, int month, int day)
+{
+	tm NewTime;
+	NewTime.tm_year = year - 1900;
+	NewTime.tm_mon = month - 1;
+	NewTime.tm_mday = day;
+	NewTime.tm_hour = 0;
+	NewTime.tm_min = 0;
+	NewTime.tm_sec = 0;
+	NewTime.tm_isdst = 0;
+
+	time_t rawTime = mktime(&NewTime);
+	
+
+	return rawTime;
 }
 
