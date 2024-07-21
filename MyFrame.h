@@ -4,18 +4,22 @@
 class wxGrid;
 class wxGauge;
 class wxTimer;
+class Calendar;
+
 
 class MyFrame : public wxFrame
 {
 public:
 	MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size);
 
+	virtual ~MyFrame();
+
 	void OnTimer(wxTimerEvent& event);
 private:
 	void OnHello(wxCommandEvent& event);
 	void OnExit(wxCommandEvent& event);
 	void OnAbout(wxCommandEvent& event);
-
+	void OnSize(wxSizeEvent& event);
 
 	virtual void Refresh(bool eraseBackground = true, const wxRect* rect = (const wxRect*)NULL) override;
 
@@ -33,5 +37,7 @@ private:
 
 	wxTimer* timer;
 
+	Calendar* calendar;
+	wxBoxSizer* boxSizer;
 
 };

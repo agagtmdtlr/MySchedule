@@ -21,7 +21,7 @@ public:
 	virtual ~Calendar() override; 
 
 	void OnInit();
-    void OnTimer();
+    void OnTimer(wxTimerEvent& event);
 
     time_t MakeTime(int year, int month, int day);
 
@@ -33,4 +33,6 @@ private:
     wxDateTime::Month selectedMonth;
     int selectedDay;
     wxDateTime dateTime;
+
+    
 };

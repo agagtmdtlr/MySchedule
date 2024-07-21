@@ -35,5 +35,8 @@
     <ClInclude Include="MySTL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MyDefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
